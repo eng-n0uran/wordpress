@@ -1,0 +1,549 @@
+                                   /
+ ---------------------------------------------------------------------------
+ |                |                              |                         |
+opt             home                            bin                       sys
+|               /------------------\ 
+rh            ahmed                yasser
+            /----|------\               \
+    folder_x   file_1   folder_y    my_folder
+       
+    
+Relative Path:-
+Example ( You’re current location is folder “folder_x” and you
+want to move into folder “rh")
+--> [ahmad@localhost folder_x]$ cd ../../../opt/rh
+
+
+Absolute pat:-
+Example ( You’re current location is folder “folder_x” and
+you want to move into folder “rh
+--> [ahmad@localhost folder_x]$ cd /opt/r
+
+
+Assuming your current location is “rh” and you want to
+# create a file named “file_1” under the folder “ahmad
+--> [ahmad@localhost ~]$ touch h ../../home/ahmad/file_1
+
+
+create multiple files having a common
+# sub-name like for example (f1, f2,f3, f4, f5, f6)
+-->[ahmad@localhost ~]$ touch f{1..6}
+
+
+# remove a file named “file_1” under your current location
+[ahmad@localhost ~]$ rm file_1
+
+Suppose you want to remove multiple files having a common
+# sub-name like for example (f1, f2,f3)
+[ahmad@localhost ~]$ rm f*
+
+# Assuming your current location is “rh” and you want to
+# remove a file named “file_1” under the folder “ahmad
+--> [ahmad@localhost ~]$ rm ../../home/ahmad/file_1
+
+Copy a file using the com --> cp  src_file  dest_fil
+# Assuming being in “folder_x”, where we have a file named
+# “my_file” and we want to copy this file into “folder_y”
+[ahmad@localhost ~]$ cp file_1 ../folder_y
+
+
+#create file and moves the file “file_3003” into the directory“Desktop”
+[ahmad@localhost ~]$ touch file_3003
+[ahmad@localhost ~]$ mv file_3003 Desktop 
+
+
+#creates the directory “my_new_folder” inside of your current
+location --> /home/ahmad
+[ahmad@localhost ~]$ mkdir my_new_folder
+ 
+
+The previous command removes the directory “my_new_folder”
+inside of your current location --> /home/ahmad
+[ahmad@localhost ~]
+$ rmdir my_new_folder
+
+
+[ahmad@localhost ~]$ mkdir my_new_folder_4
+[ahmad@localhost ~]$ cp -r my_new_folder_4 Desktop
+The previous command copies the directory “my_new_folder_4” into the directory “Desktop”
+
+[ahmad@localhost ~]$ mkdir my_new_folder_6
+[ahmad@localhost ~]$ mv my_new_folder_6 Desktop
+The previous command moves the directory “my_new_folder_6” and all of its contents into the
+directory “Desktop”
+
+
+Login as “root” using command “su”
+[ahmad@localhost ~]$ su
+Password: [enter your root user password here]
+[root@localhost ~]$
+
+
+[root@localhost ~]$ useradd user_1
+The previous command creates
+
+
+[root@localhost ~]$ groupadd group_1
+The previous command creates group
+
+
+> change the password of “user_1”
+[root@localhost ~]$ passwd user_1
+New password: [enter the new password here]
+Retype new password: [enter the new password here again]
+
+
+Add a user to group/groups 
+[root@localhost ~]$ usermod user_1 --append --group G1,G2
+[root@localhost ~]$ usermod user_1 -aG G1,G2
+The 2 commands above are equivalent
+
+Another useful option is --expiredate .. which can be used to set a date after which the user will
+not be able to login to the system
+[root@localhost ~]$ usermod user_1 --expiredate 2021-04-21
+
+
+Another option is --home .. which is used to set the default location of a user
+[root@localhost ~]$ usermod user_1 --home /bin
+This means when user_1 logs into the system he will be moved automatically to /bin
+
+
+userdel user_1
+The previous command deletes
+
+
+*** Permissions for Files ***
+R ==> Read (Being able to view a file contents)
+W ==> Write (Being able to modify a file contents)
+X ==> Execute (Being able to run a file as a program
+
+Every file has both an owner and a group
+If we list the permissions of a file named “file_1”, using the commd
+
+[ahmad@localhost ~]$ ls -l file_1
+We get somthing like the following:-
+- --- --- ---  Owner  Group    File_name
+- rwx rw- r--  ahmad   admins  file_
+
+The first cell show the type 
+the next three cells represent  owner
+the next three cells represent  group
+the next three cells represent  others
+
+
+Example: If we list the permissions of another file and get the following 
+output - r-- rw- r - - ahmad ,What permissions does ahmad has over file_2 ?
+-->ahmad only has (Read), admins whose members should be able to (Read and Write)
+
+
+Setting Permissions Numerically
+Every permission of the three permissions is assigned a number
+Read    R ==> 4
+Write   W ==> 2
+Execute X ==> 1
+Read and Execute) we assign them the number (4 + 1 ==> 5)
+
+For example the following number 536 means that:
+The first digit for the Owner
+The second digit for the Group
+The third digit for the Others
+Owner =has=> Read & Execute (4 + 1 = 5)
+Group =has=> Write & Execute (2 + 1 = 3)
+Others =has=> Read & Write (4 + 2 = 6)
+
+
+Changing the permission is performed using the command chmod which is
+short for (change mode)
+          chmod 3-digits file_name
+Example:
+1. List “file_1” permissions using:
+     [ahmad@localhost ~]$ ls -l file_1
+                 - rwx rw- r - - ahmad admins file_1
+
+2. Change “file_2” permissions using:
+     [ahmad@localhost ~]$ chmod 536 file_1
+
+3. List “file_1” permissions again:
+     [ahmad@localhost ~]$ ls -l file_1
+                 - r-x -wx rw- ahmad admins file
+
+             setting Permissions Symbolically
+ Set the user (user = owner) permission to read and write as follows:
+[ahmad@localhost ~]$ chmod u=rw file_1
+
+ Set the group permission to read as follows:
+[ahmad@localhost ~]$ chmod g=r file_1
+
+ Set the others permission to execute as follows:
+[ahmad@localhost ~]$ chmod o=x file_1
+
+ Set the user permission to read and write and the group to read as follows:
+[ahmad@localhost ~]$ chmod u=rw,g=r file_1
+Note the two permissions are separated by a comma
+
+
+
+Adding Permissions
+ Add execute permission to the user as follows
+[ahmad@localhost ~]$ chmod u+x file_1
+
+ Add (write) permission to the group and (read and write) to the others asfollows
+[ahmad@localhost ~]$ chmod g+w,o+r
+
+
+Removing Permissions:-
+ Remove execute permission from the user as follows
+[ahmad@localhost ~]$ chmod u-x file_1
+
+ Remove (write) permission from the group and (read and write) from the
+others as follows
+[ahmad@localhost ~]$ chmod g-w,o-rw file_1
+
+1. create a new folder
+       mkdir test-folder
+2. Remove all permissions
+      chmod -rwx test-folder
+3. Try to
+  1. list the contents
+  2. create a new file inside that folder
+  3. enter the folder
+You’ll always get ( Permission denied )
+  ls test-folder [READ]
+  touch test-folder/test-file [WRITE]
+  cd test-folder [EXECUTE]
+4. Add [READ]
+   chmod u+r test-folder
+   ls test-folder
+5. Add [EXECUTE]
+   chmod u+x test-folder
+   cd test-folder
+6. Add [WRITE]
+   chmod u+w test-folder
+   touch test-folder/test-file
+If you apply WRITE before EXECUTE it will NOT wor
+
+
+To search for a specific file inside of a directory
+   find directory_path -name “file_name”
+[ahmad@localhost /home/ahmad]$ find ahmad -name “file_300”
+
+If you don’t specify the directory, the find command will automatically
+# search in your current directory ==> [ahmad@localhost /home]$ find -name “file_300”
+
+
+
+To perform a specific operation on the returned results
+# use the -exec option ==> find directory_path -name “file_name” exec command
+
+For example, to copy all of the pdf files ( the ones inside /usr ) into /home/ahmad home directory, use the 
+following command. 
+[ahmad@localhost /]$ find /usr -name “*.pdf” -exec cp {} /home/ahmad \
+
+
+     Searching by size 
+Search for files with size equal to 50 Bytes
+[ahmad@localhost /]$ find /usr -name “*.pdf” -size 50
+
+Search for files with with size higher (Note the plus sign) than 50 Kilo Bytes
+[ahmad@localhost /]$ find /usr -size +50k
+
+Search for files with with size lower (Note the minus sign) than 50 MegaBytes
+[ahmad@localhost /]$ find /usr -size -50M
+
+Search for files with with size lower (Note the minus sign) than 50 GigaBytes
+[ahmad@localhost /]$ find /usr -size -50G
+
+Searching for directories
+Search for directories instead of files using the “-type” option 
+[ahmad@localhost /]$ find /usr -type d -name ”a*”
+
+[ahmad@localhost /]$ find /usr -iname ”a*”
+The previous command searches for files starting with 
+either the small letter “a” 
+or the capital letter “A”
+
+The “Locate” command is also used for searching files and directories
+If you create a new file the locate command will not find it until you update the database, 
+using the command updatedb (Note, you have to login as a root user first to be able to update the database)
+
+[ahmad@localhost /home]$ touch file_400
+[ahmad@localhost /home]$ locate “file_400”            ==> Nothing is found
+[ahmad@localhost /home]$ su                           ==> Login as root
+[root@localhost /home]$ updatedb 
+[root@localhost /home]$ exit                          ==> returns to original user
+[ahmad@localhost /home]$ locate “file_400”            ==> Returns the path for the file
+
+To find all of the available shells on your system
+[ahmad@localhost /home]$ cat /etc/shells
+Returns something like
+/bin/sh
+/bin/bash
+/bin/tcsh
+/bin/cs
+
+> To use a specific shell temporarily, write the full path of the shell.
+[ahmad@localhost /home]$ /bin/sh
+> To go back to the previous shell, just write “exit​” or hit ( ctrl + D).
+[ahmad@localhost /home]$ exit
+
+
+> To use a specific shell permanently​, write use the command “chsh​”
+(short for: change shell).
+[ahmad@localhost /home]$ chsh
+Changing shell for ahmad.
+New shell [/bin/bash]: ​/bin/sh
+Password:
+Shell changed.
+
+
+To find the name of the current shell
+[ahmad@localhost /home]$ echo​ $SHELL
+Notice the $​ and that the word “SHELL​” is all in CAPS.
+
+
+Define a variable by writing the variable name followed by an
+equals sign​ followed by the value ​(integers, strings).
+
+
+[ahmad@localhost /home]$ a=hello-world    ==>don’t need to add double quotes as long as the value
+ consists of one word with no spaces​.
+[ahmad@localhost /home]$ b=”Hello World”   ==>Double quotes were added because the
+value consists of two words separated by a space​.
+[ahmad@localhost /home]$ c=19
+
+
+Print the value of a variable using the echo command followed by a
+dollar sign followed by the variable name​.
+[ahmad@localhost /home]$ echo $a
+hello-world
+[ahmad@localhost /home]$ echo $b
+Hello World
+[ahmad@localhost /home]$ echo $c
+19
+
+
+The output is a list of colon(:) separated list of directories in which the shell looks for commands.
+echo $PATH
+
+prompt settings ==> echo $PS1
+
+current Shell echo $SHELL
+
+to print all the environment variables
+[ahmad@localhost /home]$ printenv
+
+
+
+
+Arithmetic Operation
+Arithmetic operations should be wrapped inside of double
+parenthese ==> c=$(( a + b ))
+
+[ahmad@localhost /home]$ a=3
+[ahmad@localhost /home]$ b=6
+[ahmad@localhost /home]$ c=$(( a + b ))
+[ahmad@localhost /home]$ echo $c
+9
+
+==> Notice the increment ​and decrement ​operators are also available.
+[ahmad@localhost /home]$ a=3
+[ahmad@localhost /home]$ echo $a
+3
+[ahmad@localhost /home]$ (( a++ ))
+[ahmad@localhost /home]$ echo $a
+4
+[ahmad@localhost /home]$ (( a-- ))
+[ahmad@localhost /home]$ echo $a
+
+==> Notice that floating point math is not available
+[ahmad@localhost /home]$ d=$(( 1/3 ))
+[ahmad@localhost /home]$ echo $d
+0
+
+
+Steps of creating and running a bash shell script
+1.[ahmad@localhost /home]$ touch​ first_script.sh
+2.[ahmad@localhost /home]$ nano​ first_script.sh
+3.Add ( #!/bin/bash​ ) to the first line of your file.
+  Move to the next line and add some commands.
+ --------------------------------
+ | #!/bin/bash                  |
+ |file_name=”Ahmad”             |
+ |touch $​file_name              |
+ |                              |
+  -------------------------------
+ Save → ctrl + o
+ Exit → ctrl + x
+4.Run ==> write in terminal ==> bash first_script.sh​ 
+
+
+#check by using  (if statment and square bracket[]) if x is less than 50 print value of x is less than 50 
+else print  value of x is notless than 50 (x=15);
+x=13
+if [ $x -lt 50 ] # single Brackets
+then
+echo “$x ​is less than 50”
+else
+echo “$x ​is NOT less than 50”
+fi
+
+
+#check by using  (if statment and circle bracket()) if x is less than 50 print value of x is less than 50 
+else print  value of x is notless than 50 (x=15);
+x=13
+if (( $x < 50 )) # # integer comparison
+then
+echo “$x ​is less than 50”
+else
+echo “$x ​is NOT less than 50”
+fi
+
+
+what is the output of the following code:-
+x=100
+if [[ $x < 20​ ]]
+then
+echo “$x ​is less than 20”
+else
+echo “$x ​is NOT less than 20”
+fi
+output==>print “ 100 is less than 20 ”
+
+#using if statment and double bracket to check string 
+if [[ “cat” == “cat” ]]
+then
+echo “True”
+else
+echo “False”
+fi
+
+
+#using if statment and single bracket to check string 
+if [ “cat” == “cat” ] # RIGHT
+then
+echo “True”
+else
+echo “False”
+fi
+
+
+# write example for  while loop   
+i=0
+while [[ $i -lt 10 ]]
+do
+echo “i now is ”$i
+(( i++ ))
+done
+
+# write example for  until loop   
+i=0
+until [[ $i -g​t 10 ]] ; do
+echo “i now is ”$i
+(( i++ ))
+done
+
+what is the output of the following code:-
+for i in 1 2 3
+do
+echo “i now is ”$i
+done
+
+output==>
+ prints:
+i now is 1
+i now is 2
+i now is 3
+
+
+what is the output of the following code:-
+for i in {1..3}
+do
+echo “i now is ”$i
+don
+
+output==>
+ prints:
+i now is 1
+i now is 2
+i now is 3
+
+what is the output of the following code:-
+for i in {1..8..3}
+do
+echo “i now is ”$i
+done
+
+output==>
+ prints:
+i now is 1
+i now is 4
+i now is 7
+
+#example for OUTPUT​ of another command is input of other command  
+for i in $( ls )
+do
+echo “current file is: ”$i
+don
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
